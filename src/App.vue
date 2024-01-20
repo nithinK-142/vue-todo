@@ -1,9 +1,3 @@
-<script setup>
-import Todo from "./components/Todo.vue";
-</script>
-
 <template>
-  <main>
-    <Todo />
-  </main>
+  <h1>Hey</h1>
 </template>
