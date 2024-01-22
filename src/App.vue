@@ -4,19 +4,14 @@
       <img src="./assets/pinia-logo.svg" alt="pinia logo" />
       <h1>Vue Todos</h1>
     </header>
-    <div v-for="task in tasks" :key="task.id" class="tasks">
-      <p>{{ task.id }}</p>
-      <p>
-        {{ task.title }}
-      </p>
-      <p>{{ task.isFav ? "fav" : "unfav" }}</p>
-    </div>
+    <TaskDetails :tasks="tasks" />
   </main>
 </template>
 
 <script setup>
 import { useTaskStore } from "@/stores/TaskStore";
 import { storeToRefs } from "pinia";
+import TaskDetails from "@/components/TaskDetails.vue"
 
 const taskStore = useTaskStore();
 
