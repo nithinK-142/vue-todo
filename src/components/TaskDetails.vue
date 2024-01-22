@@ -1,5 +1,9 @@
 <template>
-  <div v-for="task in tasks" :key="task.id" class="task-list">
+  <div class="filter">
+    <button @click="setFilter('all')">All Tasks</button>
+    <button @click="setFilter('fav')">Fav Tasks</button>
+  </div>
+  <div v-for="task in filteredTasks" :key="task.id" class="task-list">
     <div class="task">
       <h3>
         {{ task.title }}
@@ -13,5 +17,18 @@
 </template>
 
 <script setup>
-const props = defineProps(["tasks"]);
+import { ref, computed } from "vue";
+
+const { tasks, favs } = defineProps(["tasks", "favs"]);
+
+const filter = ref("all");
+
+const setFilter = (value) => {
+  filter.value = value;
+};
+
+const filteredTasks = computed(() => {
+  if (filter.value === "all") return tasks;
+  else if (filter.value === "fav") return favs;
+});
 </script>
