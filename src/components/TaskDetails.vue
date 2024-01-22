@@ -3,6 +3,11 @@
     <button @click="setFilter('all')">All Tasks</button>
     <button @click="setFilter('fav')">Fav Tasks</button>
   </div>
+  <p v-if="filter === 'all'">You have {{ totalCount }} tasks left to do.</p>
+  <p v-else-if="filter === 'fav'">
+    You have {{ favCount }} favs left to do.
+  </p>
+
   <div v-for="task in filteredTasks" :key="task.id" class="task-list">
     <div class="task">
       <h3>
@@ -19,7 +24,12 @@
 <script setup>
 import { ref, computed } from "vue";
 
-const { tasks, favs } = defineProps(["tasks", "favs"]);
+const { tasks, favs, favCount, totalCount } = defineProps([
+  "tasks",
+  "favs",
+  "favCount",
+  "totalCount",
+]);
 
 const filter = ref("all");
 
@@ -32,3 +42,9 @@ const filteredTasks = computed(() => {
   else if (filter.value === "fav") return favs;
 });
 </script>
+
+<style scoped>
+p {
+  text-align: center;
+}
+</style>

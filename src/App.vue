@@ -4,7 +4,12 @@
       <img src="./assets/pinia-logo.svg" alt="pineapple" />
       <h1>Vue Todos</h1>
     </header>
-    <TaskDetails :tasks="tasks" :favs="favs" />
+    <TaskDetails
+      :tasks="tasks"
+      :favs="favs"
+      :favCount="favCount"
+      :totalCount="totalCount"
+    />
   </main>
 </template>
 
@@ -15,5 +20,5 @@ import TaskDetails from "@/components/TaskDetails.vue";
 
 const taskStore = useTaskStore();
 
-const { tasks, favs } = storeToRefs(taskStore);
+const { tasks, favs, favCount, totalCount } = storeToRefs(taskStore);
 </script>
