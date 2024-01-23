@@ -1,17 +1,15 @@
 <template>
   <main>
-    <header>
-      <img src="./assets/pinia-logo.svg" alt="pineapple" />
-      <h1>Vue Todos</h1>
-    </header>
+    <Header />
     <div class="new-task-form">
       <TaskForm />
     </div>
-    <TaskDetails />
+    <TaskList />
   </main>
 </template>
 
 <script setup>
-import TaskDetails from "@/components/TaskDetails.vue";
+import Header from "@/components/Header.vue";
+import TaskList from "@/components/TaskList.vue";
 import TaskForm from "@/components/TaskForm.vue";
 </script>

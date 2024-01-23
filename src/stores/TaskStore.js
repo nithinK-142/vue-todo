@@ -10,9 +10,10 @@ export const useTaskStore = defineStore("todos", {
       return this.tasks.filter((t) => t.isFav);
     },
     favCount() {
-      return this.tasks.reduce((prev, curr) => {
-        return curr.isFav ? prev + 1 : prev;
-      }, 0);
+      return this.tasks.reduce(
+        (prev, curr) => (curr.isFav ? prev + 1 : prev),
+        0
+      );
     },
     totalCount: (state) => {
       return state.tasks.length;
