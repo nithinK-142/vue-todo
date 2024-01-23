@@ -14,3 +14,9 @@ const setFilter = (newFilter) => {
   taskStore.filter = newFilter;
 };
 </script>
+
+<style scoped>
+.icons :first-child:hover {
+  color: black;
+}
+</style>

@@ -1,10 +1,6 @@
 <template>
   <FilterButtons />
-  <p>
-    You have {{ displayCount }} {{ filter === "fav" ? "favs" : "tasks" }} left
-    to do.
-  </p>
-
+  <TaskCount />
   <div class="loading" v-if="loading">Loading tasks...</div>
 
   <div v-for="task in filteredTasks" :key="task.id" class="task-list">
@@ -28,29 +24,16 @@ import { useTaskStore } from "@/stores/TaskStore";
 import FilterButtons from "./FilterButtons.vue";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
+import TaskCount from "./TaskCount.vue";
 
 const taskStore = useTaskStore();
 const { getTasks, deleteTask, toggleFav } = taskStore;
 
 getTasks();
 
-const { filter, tasks, loading, favs, favCount, totalCount } =
-  storeToRefs(taskStore);
+const { filter, tasks, loading, favs } = storeToRefs(taskStore);
 
 const filteredTasks = computed(() => {
   return filter.value === "fav" ? favs.value : tasks.value;
 });
-
-const displayCount = computed(() => {
-  return filter.value === "fav" ? favCount.value : totalCount.value;
-});
 </script>
-
-<style scoped>
-p {
-  text-align: center;
-}
-.icons :first-child:hover {
-  color: black;
-}
-</style>
