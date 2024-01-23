@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
 
+const BASE_URL = "http://localhost:3000/tasks";
 export const useTaskStore = defineStore("todos", {
   state: () => ({
     tasks: [],
+    filter: "",
     loading: false,
   }),
   getters: {
@@ -22,7 +24,7 @@ export const useTaskStore = defineStore("todos", {
   actions: {
     async getTasks() {
       this.loading = true;
-      const res = await fetch("http://localhost:3000/tasks");
+      const res = await fetch(BASE_URL);
       const data = await res.json();
       this.tasks = data;
       this.loading = false;
@@ -30,7 +32,7 @@ export const useTaskStore = defineStore("todos", {
     async addTask(task) {
       this.tasks.push(task);
 
-      const res = await fetch("http://localhost:3000/tasks", {
+      const res = await fetch(BASE_URL, {
         method: "POST",
         body: JSON.stringify(task),
         headers: { "Content-Type": "application/json" },
@@ -45,7 +47,7 @@ export const useTaskStore = defineStore("todos", {
         return t.id !== id;
       });
 
-      const res = await fetch("http://localhost:3000/tasks/" + id, {
+      const res = await fetch(BASE_URL + "/" + id, {
         method: "DELETE",
       });
 
@@ -57,7 +59,7 @@ export const useTaskStore = defineStore("todos", {
       const task = this.tasks.find((t) => t.id === id);
       task.isFav = !task.isFav;
 
-      const res = await fetch("http://localhost:3000/tasks/" + id, {
+      const res = await fetch(BASE_URL + "/" + id, {
         method: "PATCH",
         body: JSON.stringify({ isFav: task.isFav }),
         headers: { "Content-Type": "application/json" },

@@ -1,8 +1,5 @@
 <template>
-  <div class="filter">
-    <button @click="setFilter('all')">All Tasks</button>
-    <button @click="setFilter('fav')">Fav Tasks</button>
-  </div>
+  <FilterButtons />
   <p>
     You have {{ displayCount }} {{ filter === "fav" ? "favs" : "tasks" }} left
     to do.
@@ -28,21 +25,17 @@
 
 <script setup>
 import { useTaskStore } from "@/stores/TaskStore";
+import FilterButtons from "./FilterButtons.vue";
 import { storeToRefs } from "pinia";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 
 const taskStore = useTaskStore();
 const { getTasks, deleteTask, toggleFav } = taskStore;
 
 getTasks();
 
-const { tasks, loading, favs, favCount, totalCount } = storeToRefs(taskStore);
-
-const filter = ref("all");
-
-const setFilter = (newFilter) => {
-  filter.value = newFilter;
-};
+const { filter, tasks, loading, favs, favCount, totalCount } =
+  storeToRefs(taskStore);
 
 const filteredTasks = computed(() => {
   return filter.value === "fav" ? favs.value : tasks.value;
