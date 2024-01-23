@@ -13,7 +13,12 @@
       <h3>{{ task.title }}</h3>
       <div class="icons">
         <i @click="deleteTask(task.id)" class="material-icons">delete</i>
-        <i @click="toggleFav(task.id)" class="material-icons">favorite</i>
+        <i
+          @click="toggleFav(task.id)"
+          :class="{ active: task.isFav }"
+          class="material-icons"
+          >favorite</i
+        >
       </div>
     </div>
   </div>
@@ -46,5 +51,8 @@ const displayCount = computed(() => {
 <style scoped>
 p {
   text-align: center;
+}
+.icons :first-child:hover {
+  color: black;
 }
 </style>

@@ -53,6 +53,7 @@ header h1 {
   text-align: right;
 }
 .task i {
+  user-select: none;
   font-size: 1.4em;
   margin-left: 6px;
   cursor: pointer;
