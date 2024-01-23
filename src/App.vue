@@ -4,21 +4,14 @@
       <img src="./assets/pinia-logo.svg" alt="pineapple" />
       <h1>Vue Todos</h1>
     </header>
-    <TaskDetails
-      :tasks="tasks"
-      :favs="favs"
-      :favCount="favCount"
-      :totalCount="totalCount"
-    />
+    <div class="new-task-form">
+      <TaskForm />
+    </div>
+    <TaskDetails />
   </main>
 </template>
 
 <script setup>
-import { useTaskStore } from "@/stores/TaskStore";
-import { storeToRefs } from "pinia";
 import TaskDetails from "@/components/TaskDetails.vue";
-
-const taskStore = useTaskStore();
-
-const { tasks, favs, favCount, totalCount } = storeToRefs(taskStore);
+import TaskForm from "@/components/TaskForm.vue";
 </script>

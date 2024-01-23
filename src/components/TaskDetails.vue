@@ -3,43 +3,43 @@
     <button @click="setFilter('all')">All Tasks</button>
     <button @click="setFilter('fav')">Fav Tasks</button>
   </div>
-  <p v-if="filter === 'all'">You have {{ totalCount }} tasks left to do.</p>
-  <p v-else-if="filter === 'fav'">
-    You have {{ favCount }} favs left to do.
+  <p>
+    You have {{ displayCount }} {{ filter === "fav" ? "favs" : "tasks" }} left
+    to do.
   </p>
 
   <div v-for="task in filteredTasks" :key="task.id" class="task-list">
     <div class="task">
-      <h3>
-        {{ task.title }}
-      </h3>
+      <h3>{{ task.title }}</h3>
       <div class="icons">
-        <i class="material-icons">delete</i>
-        <i class="material-icons">favorite</i>
+        <i @click="deleteTask(task.id)" class="material-icons">delete</i>
+        <i @click="toggleFav(task.id)" class="material-icons">favorite</i>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useTaskStore } from "@/stores/TaskStore";
+import { storeToRefs } from "pinia";
 import { ref, computed } from "vue";
 
-const { tasks, favs, favCount, totalCount } = defineProps([
-  "tasks",
-  "favs",
-  "favCount",
-  "totalCount",
-]);
+const taskStore = useTaskStore();
+const { deleteTask, toggleFav } = taskStore;
+const { tasks, favs, favCount, totalCount } = storeToRefs(taskStore);
 
 const filter = ref("all");
 
-const setFilter = (value) => {
-  filter.value = value;
+const setFilter = (newFilter) => {
+  filter.value = newFilter;
 };
 
 const filteredTasks = computed(() => {
-  if (filter.value === "all") return tasks;
-  else if (filter.value === "fav") return favs;
+  return filter.value === "fav" ? favs.value : tasks.value;
+});
+
+const displayCount = computed(() => {
+  return filter.value === "fav" ? favCount.value : totalCount.value;
 });
 </script>
 
