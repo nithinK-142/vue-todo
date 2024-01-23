@@ -8,6 +8,8 @@
     to do.
   </p>
 
+  <div class="loading" v-if="loading">Loading tasks...</div>
+
   <div v-for="task in filteredTasks" :key="task.id" class="task-list">
     <div class="task">
       <h3>{{ task.title }}</h3>
@@ -30,8 +32,11 @@ import { storeToRefs } from "pinia";
 import { ref, computed } from "vue";
 
 const taskStore = useTaskStore();
-const { deleteTask, toggleFav } = taskStore;
-const { tasks, favs, favCount, totalCount } = storeToRefs(taskStore);
+const { getTasks, deleteTask, toggleFav } = taskStore;
+
+getTasks();
+
+const { tasks, loading, favs, favCount, totalCount } = storeToRefs(taskStore);
 
 const filter = ref("all");
 
