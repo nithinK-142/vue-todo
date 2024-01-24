@@ -21,3 +21,9 @@ const props = defineProps(["task"]);
 const taskStore = useTaskStore();
 const { deleteTask, toggleFav } = taskStore;
 </script>
+
+<style scoped>
+.icons :first-child:hover {
+  color: black;
+}
+</style>

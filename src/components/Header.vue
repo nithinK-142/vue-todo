@@ -1,7 +1,7 @@
 <template>
   <header>
     <a @click.prevent="taskStore.$reset">
-      <img src="../assets/pinia-logo.svg" alt="pineapple" />
+      <img src="@/assets/pinia-logo.svg" alt="pineapple" />
     </a>
     <h1>Vue Todos</h1>
   </header>
