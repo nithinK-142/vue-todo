@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
 const BASE_URL = "http://localhost:3000/tasks";
+
 export const useTaskStore = defineStore("todos", {
   state: () => ({
     tasks: [],
@@ -11,12 +12,14 @@ export const useTaskStore = defineStore("todos", {
     favs() {
       return this.tasks.filter((t) => t.isFav);
     },
+
     favCount() {
       return this.tasks.reduce(
         (prev, curr) => (curr.isFav ? prev + 1 : prev),
         0
       );
     },
+
     totalCount: (state) => {
       return state.tasks.length;
     },
@@ -29,6 +32,7 @@ export const useTaskStore = defineStore("todos", {
       this.tasks = data;
       this.loading = false;
     },
+
     async addTask(task) {
       this.tasks.push(task);
 
@@ -38,10 +42,22 @@ export const useTaskStore = defineStore("todos", {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (res.error) {
-        console.log(res.error);
-      }
+      if (res.error) console.log(res.error);
     },
+
+    async editTask(id, newTitle) {
+      const task = this.tasks.find((t) => t.id === id);
+      task.title = newTitle;
+
+      const res = await fetch(BASE_URL + "/" + id, {
+        method: "PATCH",
+        body: JSON.stringify({ title: task.title }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res.error) console.log(res.error);
+    },
+
     async deleteTask(id) {
       this.tasks = this.tasks.filter((t) => {
         return t.id !== id;
@@ -51,10 +67,9 @@ export const useTaskStore = defineStore("todos", {
         method: "DELETE",
       });
 
-      if (res.error) {
-        console.log(res.error);
-      }
+      if (res.error) console.log(res.error);
     },
+
     async toggleFav(id) {
       const task = this.tasks.find((t) => t.id === id);
       task.isFav = !task.isFav;
@@ -65,9 +80,7 @@ export const useTaskStore = defineStore("todos", {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (res.error) {
-        console.log(res.error);
-      }
+      if (res.error) console.log(res.error);
     },
   },
 });
