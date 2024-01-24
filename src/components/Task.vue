@@ -2,11 +2,11 @@
   <div class="task">
     <h3 @click="editTaskTitle">
       <input
-        ref="titleInput"
         v-if="editing"
         v-model="editedTitle"
         @blur="saveEditedTitle"
         @keyup.enter="saveEditedTitle"
+        v-inputfocus
       />
       <span v-else>
         {{ task.title }}
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from "vue";
+import { ref } from "vue";
 import { useTaskStore } from "@/stores/TaskStore";
 
 const props = defineProps(["task"]);
@@ -35,13 +35,10 @@ const { editTask, deleteTask, toggleFav } = useTaskStore();
 const editing = ref(false);
 const editedTitle = ref(props.task.title);
 
-const titleInput = ref(null);
-const editTaskTitle = () => {
-  editing.value = true;
+const editTaskTitle = () => (editing.value = true);
 
-  nextTick(() => {
-    titleInput.value.focus();
-  });
+const vInputfocus = {
+  mounted: (el) => el.focus(),
 };
 
 const saveEditedTitle = () => {
